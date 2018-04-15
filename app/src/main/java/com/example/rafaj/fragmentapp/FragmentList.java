@@ -42,8 +42,9 @@ public class FragmentList extends ListFragment implements AdapterView.OnItemClic
         String[] tamanioarr = getResources().getStringArray(R.array.Tamanio);
         TypedArray imagenes = getResources().obtainTypedArray(R.array.imagenes);
         planetas = new Planeta[getResources().getStringArray(R.array.Planets).length];
+        Log.d("DRAWABLE", "onActivityCreated: "+ imagenes.getDrawable(0).toString());
         for (int i = 0;i<getResources().getStringArray(R.array.Planets).length;i++){
-            planetas[i] = new Planeta(planetarr[i],tamanioarr[i],distanciarr[i],imagenes.getDrawable(i));
+            planetas[i] = new Planeta(planetarr[i],tamanioarr[i],distanciarr[i],imagenes.getResourceId(i,0));
              }
     }
 
@@ -55,14 +56,16 @@ public class FragmentList extends ListFragment implements AdapterView.OnItemClic
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             Intent newIntent = new Intent(getActivity().getApplicationContext(), Main2Activity.class);
             newIntent.setAction(Intent.ACTION_SEND);
-            newIntent.setType("text/plain");
-            newIntent.putExtra(Intent.EXTRA_TEXT, adapterView.getItemAtPosition(i).toString());
+            newIntent.setType("*/*");
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("PLANETA",planetas[i]);
+            newIntent.putExtras(bundle);
             startActivity(newIntent);
         }else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             Toast.makeText(getActivity(), "Item: " + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
 
             Bundle bundle = new Bundle();
-            bundle.putString("KEY", adapterView.getItemAtPosition(i).toString());
+            bundle.putSerializable("PLANETA", planetas[i]);
             FragmentViewer frag = new FragmentViewer();
             frag.setArguments(bundle);
 

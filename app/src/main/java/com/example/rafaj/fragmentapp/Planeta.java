@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 public class Planeta implements Serializable {
     private String nombre,tamanio,distancia;
-    private Drawable imageID;
-    public Planeta(String nombre,String tamanio,String distancia,Drawable imageID){
+    private int imageID;
+    public Planeta(String nombre,String tamanio,String distancia,int imageID){
         this.nombre=nombre;
         this.tamanio=tamanio;
         this.distancia =distancia;
@@ -27,7 +27,7 @@ public class Planeta implements Serializable {
         return distancia;
     }
 
-    public Drawable getImageID() {
+    public int getImageID() {
         return imageID;
     }
 }
