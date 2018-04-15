@@ -5,7 +5,10 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +21,7 @@ import android.widget.Toast;
  */
 
 public class FragmentList extends ListFragment implements AdapterView.OnItemClickListener{
-
+    private Planeta[] planetas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +37,14 @@ public class FragmentList extends ListFragment implements AdapterView.OnItemClic
                 R.array.Planets, android.R.layout.simple_list_item_1);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
+        String[] planetarr = getResources().getStringArray(R.array.Planets);
+        String[] distanciarr = getResources().getStringArray(R.array.Distancia);
+        String[] tamanioarr = getResources().getStringArray(R.array.Tamanio);
+        TypedArray imagenes = getResources().obtainTypedArray(R.array.imagenes);
+        planetas = new Planeta[getResources().getStringArray(R.array.Planets).length];
+        for (int i = 0;i<getResources().getStringArray(R.array.Planets).length;i++){
+            planetas[i] = new Planeta(planetarr[i],tamanioarr[i],distanciarr[i],imagenes.getDrawable(i));
+             }
     }
 
 
